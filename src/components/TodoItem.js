@@ -3,8 +3,8 @@ import { FaEdit } from "react-icons/fa";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import { RiDeleteBin7Fill } from "react-icons/ri";
 
-const TodoItem = (props) => {
-  const [todoValue, setTodoValue] = useState(props.name);
+const TodoItem = ({ name, id, deleteHandler, setList }) => {
+  const [todoValue, setTodoValue] = useState(name);
   const [isUpdate, setIsUpdate] = useState(false);
 
   const updateHandler = () => {
@@ -21,10 +21,10 @@ const TodoItem = (props) => {
   const updateLocalStorage = () => {
     const storedList = JSON.parse(localStorage.getItem("todoList")) || [];
     const updatedList = storedList.map((item) =>
-      item.id === props.id ? { ...item, value: todoValue } : item
+      item.id === id ? { ...item, value: todoValue } : item
     );
     localStorage.setItem("todoList", JSON.stringify(updatedList));
-    props.setList(updatedList); // Update the state in the parent component as well
+    setList(updatedList); // Update the state in the parent component as well
   };
 
   return (
@@ -38,7 +38,7 @@ const TodoItem = (props) => {
               className="text-yellow-600 cursor-pointer"
             />
             <RiDeleteBin7Fill
-              onClick={() => props.deleteHandler(props.id)}
+              onClick={() => deleteHandler(id)}
               className="text-red-600 cursor-pointer"
             />
           </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Inputbox = (props) => {
+const Inputbox = ({ setList }) => {
   const [value, setValue] = useState("");
 
   const inputHandler = (e) => {
@@ -19,7 +19,7 @@ const Inputbox = (props) => {
     localStorage.setItem("todoList", JSON.stringify(updatedList));
 
     // Update state
-    props.setList(updatedList);
+    setList(updatedList);
 
     setValue("");
   };
