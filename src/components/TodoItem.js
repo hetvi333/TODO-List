@@ -8,11 +8,23 @@ const TodoItem = (props) => {
   const [isUpdate, setIsUpdate] = useState(false);
 
   const updateHandler = () => {
+    if (isUpdate) {
+      updateLocalStorage();
+    }
     setIsUpdate(!isUpdate);
   };
 
   const updateInputHandler = (e) => {
     setTodoValue(e.target.value);
+  };
+
+  const updateLocalStorage = () => {
+    const storedList = JSON.parse(localStorage.getItem("todoList")) || [];
+    const updatedList = storedList.map((item) =>
+      item.id === props.id ? { ...item, value: todoValue } : item
+    );
+    localStorage.setItem("todoList", JSON.stringify(updatedList));
+    props.setList(updatedList); // Update the state in the parent component as well
   };
 
   return (
@@ -25,7 +37,6 @@ const TodoItem = (props) => {
               onClick={updateHandler}
               className="text-yellow-600 cursor-pointer"
             />
-
             <RiDeleteBin7Fill
               onClick={() => props.deleteHandler(props.id)}
               className="text-red-600 cursor-pointer"
@@ -42,7 +53,7 @@ const TodoItem = (props) => {
           <IoCheckmarkCircle
             onClick={updateHandler}
             className="text-green-600 text-2xl cursor-pointer"
-          /> 
+          />
         </div>
       )}
     </div>

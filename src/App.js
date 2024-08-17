@@ -33,6 +33,7 @@ function App() {
               id={item.id}
               name={item.value}
               deleteHandler={deleteHandler}
+              setList={setList} // Pass setList to TodoItem
             />
           ))}
         </div>
